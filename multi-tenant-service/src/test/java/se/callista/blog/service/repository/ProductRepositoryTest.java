@@ -1,12 +1,14 @@
 package se.callista.blog.service.repository;
 
 import com.github.database.rider.core.api.dataset.DataSet;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import se.callista.blog.service.annotation.SpringBootDbIntegrationTest;
 import se.callista.blog.service.domain.entity.Product;
+import se.callista.blog.service.multi_tenancy.util.DynamicInstrumentationLoaderUtils;
 import se.callista.blog.service.multi_tenancy.util.TenantContext;
 import se.callista.blog.service.persistence.PostgresqlTestContainer;
 
@@ -23,6 +25,11 @@ class ProductRepositoryTest {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @BeforeAll
+    public static void setUpLoadTimeWeaving() {
+        DynamicInstrumentationLoaderUtils.ensureLoaded();
+    }
 
     @Test
     @DataSet(value = {"products.yml"})
