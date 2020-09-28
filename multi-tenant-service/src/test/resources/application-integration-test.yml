@@ -8,3 +8,6 @@ multitenancy:
       url: ${DB_URL}
       username: ${DB_USERNAME}
       password: ${DB_PASSWORD}
+    liquibase:
+      parameters:
+        database: ${DB_NAME}

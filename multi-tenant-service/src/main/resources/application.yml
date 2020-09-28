@@ -14,6 +14,18 @@ multitenancy:
       url: jdbc:postgresql://localhost:5432/blog
       username: postgres
       password: secret
+      hikari:
+        maximum-pool-size: 1
     liquibase:
       enabled: true
       changeLog: classpath:db/changelog/db.changelog-tenant.yaml
+      parameters:
+        database: blog
+        schema: public
+        username: app_user
+        password: secret
+  tenant:
+    datasource:
+      url: ${multitenancy.master.datasource.url}
+      username: app_user
+      password: secret
